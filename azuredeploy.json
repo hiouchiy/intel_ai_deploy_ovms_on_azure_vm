@@ -184,7 +184,7 @@
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(variables('vmName'),'_',variables('publicIPAddressName')))]"
               },
               "subnet": {
-                "id": "[variables('subnetRef')]"
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', concat(variables('vmName'),'_',variables('virtualNetworkName')), concat(variables('vmName'),'_',variables('subnetName')))]"
               }
             }
           }
