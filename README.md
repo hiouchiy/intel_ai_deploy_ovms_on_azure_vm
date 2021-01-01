@@ -23,7 +23,13 @@ cd intel_ai_deploy_ovms_on_azure_vm
 1. The path of Model file on Azure Storage
 1. ARM Parameter file path
 
-## Run Command
+## Start deployment
+First, login to Azure.
+```Bash
+az login
+```
+
+Then, run the command below.
 ```Bash
 source ./deploy_vm.sh deploy_config.csv ResourceGroupName
 ```

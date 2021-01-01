@@ -7,7 +7,6 @@ AF_RESOURCE_GROUP=OVaaS
 AF_NAME=ovaas-backend
 
 ARM_TEMPLATE_FILE=azuredeploy.json
-#ARM_PARAMETER_FILE=vm_deploy/azuredeploy.parameters.json
 
 az group create --name $RESOURCE_GROUP --location $LOCATION
 
@@ -32,6 +31,3 @@ while read row; do
     az functionapp config appsettings set --name $AF_NAME  --resource-group $AF_RESOURCE_GROUP --settings "$AF_IP_ADDRESS_NAME=$IP_ADDRESS" "$AF_PORT_NAME=$PORT_NUMBER"
   
 done < $1
-
-#az group delete --name $RESOURCE_GROUP --y
-
