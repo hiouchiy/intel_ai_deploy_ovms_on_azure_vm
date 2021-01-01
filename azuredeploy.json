@@ -249,7 +249,7 @@
         "typeHandlerVersion": "2.0",
         "settings": {
           "fileUris": [
-            "https://ovaasstorage.blob.core.windows.net/script/setup_ovms.sh"
+            "https://raw.githubusercontent.com/hiouchiy/intel_ai_deploy_ovms_on_azure_vm/main/setup_ovms.sh"
           ]
         },
         "protectedSettings": {
