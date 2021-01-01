@@ -26,7 +26,7 @@ while read row; do
     MODEL_PATH=`echo ${row} | cut -d , -f 7`
     ARM_PARAMETER_FILE=`echo ${row} | cut -d , -f 8`
 
-    az deployment group create --name ExampleDeployment --resource-group $RESOURCE_GROUP --template-file $ARM_TEMPLATE_FILE --parameters adminUsername=ai adminPasswordOrKey=Passw0rd1234 vmSize=Standard_D2s_v4 authenticationType=password customScriptCommandToExecute="sh setup_ovms.sh ${PORT_NUMBER} ${MODEL_NAME} ${MODEL_PATH} \"${AZURE_STORAGE_CONNECTION_STRING}\"" vmName=$VM_NAME
+    az deployment group create --name ExampleDeployment --resource-group $RESOURCE_GROUP --template-file $ARM_TEMPLATE_FILE --parameters adminUsername=ai adminPasswordOrKey=Passw0rd1234 vmSize=Standard_D2s_v4 authenticationType=password customScriptCommandToExecute="sh CUSTOM_SCRIPT_setup_ovms.sh ${PORT_NUMBER} ${MODEL_NAME} ${MODEL_PATH} \"${AZURE_STORAGE_CONNECTION_STRING}\"" vmName=$VM_NAME
 
     IP_ADDRESS=`az vm list-ip-addresses -g $RESOURCE_GROUP -n $VM_NAME -o json | jq -r .[].virtualMachine.network.publicIpAddresses[0].ipAddress`
 
