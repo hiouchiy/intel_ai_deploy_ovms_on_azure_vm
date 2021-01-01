@@ -6,7 +6,14 @@ docker pull mcr.microsoft.com/azure-cli:latest
 docker run -it mcr.microsoft.com/azure-cli:latest
 ```
 
-## Configuration file (CSV format)
+Continue inside the container from this command. 
+
+```Bash
+git clone https://github.com/hiouchiy/intel_ai_deploy_ovms_on_azure_vm.git
+cd intel_ai_deploy_ovms_on_azure_vm
+```
+
+## Configure 'deploy_config.csv' file (CSV format, no header)
 -1 Function's name in Azure Functions
 -1 Model name on OpenVINO Model Server
 -1 Azure VM's name
@@ -20,8 +27,14 @@ docker run -it mcr.microsoft.com/azure-cli:latest
 ```Bash
 source ./deploy_vm.sh deploy_config.csv ResourceGroupName
 ```
+### Parameters
+-1 Config file path
+-1 Specific name of resource group to be created
 
 ## Delete Resource Group
+
+Use Azure CLI directly as below.
+
 ```Bash
 az group delete --name ResourceGroupName --y
 ```
