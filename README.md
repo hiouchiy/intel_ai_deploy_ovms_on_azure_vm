@@ -29,10 +29,36 @@ First, login to Azure.
 az login
 ```
 
-Then, run the command below.
+If you want to login without web browser, follow the instrunctions below to setup service principle. Refer [this site](https://tech.nsw-cloud.jp/2018/12/28/%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E4%B8%80%E7%99%BA%E3%81%A7azure-cli%E3%81%AB%E3%82%B5%E3%82%A4%E3%83%B3%E3%82%A4%E3%83%B3/) for the details.
+```Bash
+az ad sp create-for-rbac --name ${DisplayName} --create-cert
+``` 
+
+Below result will be output.
+```Bash
+{
+  "appId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "displayName": "${DisplayName}",
+  "fileWithCertAndPrivateKey": "/home/user/xxxxxxxxxxx.pem",
+  "name": "http://${DisplayName}",
+  "password": null,
+  "tenant": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
+```
+
+After that, you can login with below command.
+```Bash
+az login --service-principal \
+         --username ${appId} \
+         --tenant ${tenantId} \
+         --password ${fileWithCertAndPrivateKey} \
+```
+
+Finally, run the command below.
 ```Bash
 source ./deploy_vm.sh deploy_config.csv ResourceGroupName
 ```
+
 ### Parameters
 1. Config file path
 1. Specific name of resource group to be created
