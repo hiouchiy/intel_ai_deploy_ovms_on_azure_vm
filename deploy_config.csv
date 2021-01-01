@@ -1,0 +1,2 @@
+humanpose,human-pose-estimation,humanpose,HUMAN_POSE_IP_ADDRESS,HUMAN_POSE_PORT,9000,az://ovms/intel/human-pose-estimation-0001/FP16-INT8,vm_deploy/azuredeploy.parameters.json
+
