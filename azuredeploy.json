@@ -95,7 +95,7 @@
     {
       "apiVersion": "2020-06-01",
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('publicIPAddressName')]",
+      "name": "[concat(variables('vmName'),'_',variables('publicIPAddressName'))]",
       "location": "[parameters('location')]",
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
@@ -105,7 +105,7 @@
       "comments": "Default Network Security Group for template",
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2020-06-01",
-      "name": "[variables('networkSecurityGroupName')]",
+      "name": "[concat(variables('vmName'),'_',variables('networkSecurityGroupName'))]",
       "location": "[parameters('location')]",
       "properties": {
         "securityRules": [
@@ -141,10 +141,10 @@
     {
       "apiVersion": "2020-06-01",
       "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('virtualNetworkName')]",
+      "name": "[concat(variables('vmName'),'_',variables('virtualNetworkName'))]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+        "[resourceId('Microsoft.Network/networkSecurityGroups', concat(variables('vmName'),'_',variables('networkSecurityGroupName')))]"
       ],
       "properties": {
         "addressSpace": {
@@ -154,11 +154,11 @@
         },
         "subnets": [
           {
-            "name": "[variables('subnetName')]",
+            "name": "[concat(variables('vmName'),'_',variables('subnetName'))]",
             "properties": {
               "addressPrefix": "[variables('subnetPrefix')]",
               "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(variables('vmName'),'_',variables('networkSecurityGroupName')))]"
               }
             }
           }
@@ -168,11 +168,11 @@
     {
       "apiVersion": "2020-06-01",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('nicName')]",
+      "name": "[concat(variables('vmName'),'_',variables('nicName'))]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+        "[resourceId('Microsoft.Network/publicIPAddresses/', concat(variables('vmName'),'_',variables('publicIPAddressName')))]",
+        "[resourceId('Microsoft.Network/virtualNetworks/', concat(variables('vmName'),'_',variables('virtualNetworkName')))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -181,7 +181,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(variables('vmName'),'_',variables('publicIPAddressName')))]"
               },
               "subnet": {
                 "id": "[variables('subnetRef')]"
@@ -197,7 +197,7 @@
       "name": "[variables('vmName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces/', concat(variables('vmName'),'_',variables('nicName')))]"
       ],
       "properties": {
         "hardwareProfile": {
@@ -228,7 +228,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('vmName'),'_',variables('nicName')))]"
             }
           ]
         }
