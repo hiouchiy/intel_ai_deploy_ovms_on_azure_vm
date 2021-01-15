@@ -1,29 +1,31 @@
 [
     {
-	    "function_name": "humanpose",
-        "model_name": "human-pose-estimation",
         "vm_name": "humanpose",
-        "env_name_ip": "HUMANPOSE_IPADDRESS",
-        "env_name_port": "HUMAN_POSE_PORT",
-        "port_number": 9000,
-        "model_path_on_azure_storage": "az://ovms/intel/human-pose-estimation-0001/FP16-INT8"
-    },
-    {
-        "function_name": "handwritten",
-        "model_name": "handwritten-japanese-recognition",
-        "vm_name": "handwritten",
-        "env_name_ip": "HANDWRITTEN_IPADDRESS",
-        "env_name_port": "HAND_WRITTEN_PORT",
-        "port_number": 9001,
-        "model_path_on_azure_storage": "az://ovms/intel/handwritten-japanese-recognition-0001/FP16-INT8"
-    },
-    {
-        "function_name": "colorization",
-        "model_name": "colorization",
-        "vm_name": "colorization",
-        "env_name_ip": "COLORIZATION_IPADDRESS",
-        "env_name_port": "COLORIZATION_PORT",
-        "port_number": 9002,
-        "model_path_on_azure_storage": "az://ovms/public/colorization-v2/FP32"
+        "models":[
+            {
+                "function_name": "humanpose",
+                "model_name": "human-pose-estimation",
+                "env_name_ip": "HUMANPOSE_IPADDRESS",
+                "env_name_port": "HUMAN_POSE_PORT",
+                "port_number": 9000,
+                "model_path_on_azure_storage": "az://ovms/intel/human-pose-estimation-0001/FP16-INT8"
+            },
+            {
+                "function_name": "handwritten",
+                "model_name": "handwritten-japanese-recognition",
+                "env_name_ip": "HANDWRITTEN_IPADDRESS",
+                "env_name_port": "HAND_WRITTEN_PORT",
+                "port_number": 9001,
+                "model_path_on_azure_storage": "az://ovms/intel/handwritten-japanese-recognition-0001/FP16-INT8"
+            },
+            {
+                "function_name": "colorization",
+                "model_name": "colorization",
+                "env_name_ip": "COLORIZATION_IPADDRESS",
+                "env_name_port": "COLORIZATION_PORT",
+                "port_number": 9002,
+                "model_path_on_azure_storage": "az://ovms/public/colorization-v2/FP32"
+            }
+        ]
     }
 ]

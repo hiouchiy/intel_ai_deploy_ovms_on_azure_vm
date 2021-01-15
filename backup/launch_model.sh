@@ -1,0 +1,2 @@
+#!/bin/sh
+sudo docker run --rm -d -p 9000:9000 -e AZURE_STORAGE_CONNECTION_STRING="SharedAccessSignature=sv=2018-03-28&ss=b&srt=sco&sp=rl&st=2021-01-01T00%3A55%3A39Z&se=2022-01-01T00%3A55%3A00Z&sig=qA38onoiJMjX3dIDOBnELWTs2yNjNDQNtnRb1vz5068%3D;BlobEndpoint=https://ovaasstorage.blob.core.windows.net/;" openvino/model_server:latest --model_path az://ovms/intel/human-pose-estimation-0001/FP16-INT8 --model_name human-pose-estimation --port 9000
