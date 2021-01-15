@@ -28,7 +28,7 @@ for i in $( seq 0 $(($len - 1)) ); do
     MODEL_PATH=$(echo $row | jq .model_path_on_azure_storage | sed -e 's/^"//' -e 's/"$//')                                              
     echo $MODEL_PATH      
 
-    $PARAM_FOR_CUSTOM_SCRIPT="${PARAM_FOR_CUSTOM_SCRIPT} ${PORT_NUMBER},${MODEL_NAME},${MODEL_PATH}"
+    PARAM_FOR_CUSTOM_SCRIPT="${PARAM_FOR_CUSTOM_SCRIPT} ${PORT_NUMBER},${MODEL_NAME},${MODEL_PATH}"
 done
 
 echo $PARAM_FOR_CUSTOM_SCRIPT
