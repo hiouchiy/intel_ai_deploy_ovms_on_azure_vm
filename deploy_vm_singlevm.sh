@@ -6,7 +6,7 @@ LOCATION=japaneast
 AF_RESOURCE_GROUP=OVaaS
 AF_NAME=ovaas-backend
 
-ARM_TEMPLATE_FILE=azuredeploy.json
+ARM_TEMPLATE_FILE=azuredeploy_singlevm.json
 
 AZURE_STORAGE_CONNECTION_STRING=$3
 
