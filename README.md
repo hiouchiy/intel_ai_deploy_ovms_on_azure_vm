@@ -56,7 +56,7 @@ az login --service-principal \
 
 Finally, run the command below.
 ```Bash
-source ./deploy_vm.sh deploy_config.csv ResourceGroupName AzureStorageConnectionString
+source ./deploy_vm.sh deploy_config.json ResourceGroupName ARM_TEMPLATE_PATH AzureStorageConnectionString
 ```
 
 ### Parameters
