@@ -249,7 +249,7 @@
         "typeHandlerVersion": "2.0",
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/hiouchiy/intel_ai_deploy_ovms_on_azure_vm/main/CUSTOM_SCRIPT_setup_ovms.sh"
+            "https://raw.githubusercontent.com/hiouchiy/intel_ai_deploy_ovms_on_azure_vm/main/CUSTOM_SCRIPT_setup_ovms_singlevm.sh"
           ]
         },
         "protectedSettings": {
