@@ -19,6 +19,8 @@ function deploy_vm () {
 
     PARAM_FOR_CUSTOM_SCRIPT=""
     ALL_PORT_NUMBERS=""
+    MIN_PORT_NUMBER=""
+    MAX_PORT_NUMBER=""
     
     VM_NAME=$(echo $row | jq .vm_name | sed -e 's/^"//' -e 's/"$//')
     echo $VM_NAME
@@ -40,13 +42,25 @@ function deploy_vm () {
         PARAM_FOR_CUSTOM_SCRIPT="${PARAM_FOR_CUSTOM_SCRIPT} ${PORT_NUMBER},${MODEL_NAME},${MODEL_PATH}"
         
         if [$j -eq 0]; then
-            ALL_PORT_NUMBERS="${PORT_NUMBER}"
+            MIN_PORT_NUMBER=${PORT_NUMBER}
+            MAX_PORT_NUMBER=${PORT_NUMBER}
         else
-            ALL_PORT_NUMBERS="${ALL_PORT_NUMBERS},${PORT_NUMBER}"
+            if [$PORT_NUMBER -lt $MIN_PORT_NUMBER]; then
+                MIN_PORT_NUMBER=${PORT_NUMBER}
+            
+            if [$PORT_NUMBER -gt $MAX_PORT_NUMBER]; then
+                MAX_PORT_NUMBER=${PORT_NUMBER}
         fi
     done
+    
+    if [$MIN_PORT_NUMBER -eq $MAX_PORT_NUMBER]; then
+        ALL_PORT_NUMBERS="${MAX_PORT_NUMBER}"
+    else
+        ALL_PORT_NUMBERS="${MIN_PORT_NUMBER}-${MAX_PORT_NUMBER}"
+    fi
 
     echo $PARAM_FOR_CUSTOM_SCRIPT
+    echo $ALL_PORT_NUMBERS
 
     DEPLOYMENT_NAME="Deployment_${i}"
     az deployment group create --name $DEPLOYMENT_NAME --resource-group $RESOURCE_GROUP --template-file $ARM_TEMPLATE_FILE --parameters adminUsername=ai adminPasswordOrKey=Passw0rd1234 vmSize=$VM_SIZE portNumber=$ALL_PORT_NUMBERS authenticationType=password customScriptCommandToExecute="sh CUSTOM_SCRIPT_setup_ovms.sh \"${AZURE_STORAGE_CONNECTION_STRING}\" ${PARAM_FOR_CUSTOM_SCRIPT}" vmName=$VM_NAME
