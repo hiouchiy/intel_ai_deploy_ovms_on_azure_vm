@@ -11,7 +11,8 @@ apt-cache policy docker-ce
 sudo apt install -y docker-ce
 sudo usermod -aG docker ${USER}
 
-mkdir /log
+mkdir ~/log
+mkdir 777 ~/log
 
 for i in `seq 1 ${#}`
 do
@@ -26,7 +27,7 @@ do
     MODEL_PATH=`echo ${1} | cut -d , -f 3`
     echo "$PORT_NUMBER $MODEL_NAME $MODEL_PATH"
     
-    sudo docker run --rm -d -v /log:/log -p $PORT_NUMBER:9000 -e AZURE_STORAGE_CONNECTION_STRING=$AZURE_STORAGE_CONNECTION_STRING openvino/model_server:latest --model_path $MODEL_PATH --model_name $MODEL_NAME --port 9000 --log_level DEBUG --log_path "/log/log_${MODEL_NAME}.log"
+    sudo docker run --rm -d -v ~/log:/log -p $PORT_NUMBER:9000 -e AZURE_STORAGE_CONNECTION_STRING=$AZURE_STORAGE_CONNECTION_STRING openvino/model_server:latest --model_path $MODEL_PATH --model_name $MODEL_NAME --port 9000 --log_level DEBUG --log_path "/log/${MODEL_NAME}.log"
 
     shift
 done
