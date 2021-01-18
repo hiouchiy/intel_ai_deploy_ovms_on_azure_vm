@@ -1,4 +1,6 @@
-# How to automatically deploy OpenVINO™　Model Server on Azure VM
+# How to deploy OpenVINO™ Model Server automatically onto Azure VM for OVaaS 
+
+This instruction shows how to launch Azure VM and deploy OpenVINO™ Model Server and specific model (IR format) together from Azure CLI. With this instructions and scripts, We can newly deploy and delete Azure VM and Model server at the timing whenever we want. 
 
 ## Setup enviroment
 ```Bash
@@ -13,15 +15,97 @@ git clone https://github.com/hiouchiy/intel_ai_deploy_ovms_on_azure_vm.git
 cd intel_ai_deploy_ovms_on_azure_vm
 ```
 
-## Configure 'deploy_config.csv' file (CSV format, no header)
-1. Function's name in Azure Functions
-1. Model name on OpenVINO Model Server
-1. Azure VM's name
-1. Name of environemnt variable for IP address
-1. Name of environemnt variable for port number
-1. Port number
-1. The path of Model file on Azure Storage
-1. ARM Parameter file path
+## Setup a configuration file (JSON format)
+### Multiple model servers on single VM
+You can deploy multiple model servers on single VM with configuration below. This configuraiton can save cost due to least number of VM but is basically better for test or develop use.
+```JSON
+[
+    {
+        "vm_name": "modelservervm",
+        "models":[
+            {
+                "function_name": "humanpose",
+                "model_name": "human-pose-estimation",
+                "env_name_ip": "HUMANPOSE_IPADDRESS",
+                "env_name_port": "HUMAN_POSE_PORT",
+                "port_number": 9000,
+                "model_path_on_azure_storage": "az://ovms/intel/human-pose-estimation-0001/FP16-INT8"
+            },
+            {
+                "function_name": "handwritten",
+                "model_name": "handwritten-japanese-recognition",
+                "env_name_ip": "HANDWRITTEN_IPADDRESS",
+                "env_name_port": "HAND_WRITTEN_PORT",
+                "port_number": 9001,
+                "model_path_on_azure_storage": "az://ovms/intel/handwritten-japanese-recognition-0001/FP16-INT8"
+            },
+            {
+                "function_name": "colorization",
+                "model_name": "colorization",
+                "env_name_ip": "COLORIZATION_IPADDRESS",
+                "env_name_port": "COLORIZATION_PORT",
+                "port_number": 9002,
+                "model_path_on_azure_storage": "az://ovms/public/colorization-v2/FP32"
+            }
+        ]
+    }
+]
+```
+### Single model server on single VM 
+You can deploy single model server on single VM with configuration below. In short, you need same number of vm as the number of models. This configuration is much more for production use than previous one.
+```JSON
+[
+    {
+        "vm_name": "humanpose_vm",
+        "models": [
+            {
+                "function_name": "humanpose",
+                "model_name": "human-pose-estimation",
+                "env_name_ip": "HUMANPOSE_IPADDRESS",
+                "env_name_port": "HUMAN_POSE_PORT",
+                "port_number": 9000,
+                "model_path_on_azure_storage": "az://ovms/intel/human-pose-estimation-0001/FP16-INT8"
+            }
+        ]
+    },
+    {
+        "vm_name": "handwritten_vm",
+        "models": [
+            {
+                "function_name": "handwritten",
+                "model_name": "handwritten-japanese-recognition",
+                "env_name_ip": "HANDWRITTEN_IPADDRESS",
+                "env_name_port": "HAND_WRITTEN_PORT",
+                "port_number": 9000,
+                "model_path_on_azure_storage": "az://ovms/intel/handwritten-japanese-recognition-0001/FP16-INT8"
+            }
+        ]
+    },
+    {
+        "vm_name": "colorization_vm",
+        "models": [
+            {
+                "function_name": "colorization",
+                "model_name": "colorization",
+                "env_name_ip": "COLORIZATION_IPADDRESS",
+                "env_name_port": "COLORIZATION_PORT",
+                "port_number": 9000,
+                "model_path_on_azure_storage": "az://ovms/public/colorization-v2/FP32"
+            }
+        ]
+    }
+]
+
+```
+### Parameter Definitions
+1. **vm_name**: a name of Azure VM
+1. **models**: a list consisting of model(s) to be deoloyed on the VM named "vm_name"
+    1. **function_name**: the name of the corresponding fucntion on Azure functions
+    1. **model_name**: a unique name of deployed model on model server
+    1. **env_name_ip**: Name of environemnt variable for IP address on Azure Functions
+    1. **env_name_port**: Name of environemnt variable for port number on Azure Functions
+    1. **port_number**: specific port number for accesing the model
+    1. **model_path_on_azure_storage**: The path of model file (IR) on Azure Blob Storage. The format is *az://container_name/folder_name*.
 
 ## Start deployment
 First, login to Azure.
