@@ -37,7 +37,7 @@
                 "env_name_ip": "COLORIZATION_IPADDRESS",
                 "env_name_port": "COLORIZATION_PORT",
                 "port_number": 9000,
-                "model_path_on_azure_storage": "az://ovms/public/colorization-v2/FP32"
+                "model_path_on_azure_storage": "az://ovms/public/colorization-v2-old/FP32"
             }
         ]
     }
