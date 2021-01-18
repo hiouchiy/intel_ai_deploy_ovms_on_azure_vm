@@ -1,6 +1,6 @@
 [
     {
-        "vm_name": "single_vm",
+        "vm_name": "humanpose_vm",
         "vm_size": "Standard_D2s_v4",
         "models": [
             {
@@ -14,7 +14,7 @@
         ]
     },
     {
-        "vm_name": "handwritten",
+        "vm_name": "handwritten_vm",
         "vm_size": "Standard_D2s_v4",
         "models": [
             {
@@ -28,7 +28,7 @@
         ]
     },
     {
-        "vm_name": "colorization",
+        "vm_name": "colorization_vm",
         "vm_size": "Standard_D2s_v4",
         "models": [
             {
