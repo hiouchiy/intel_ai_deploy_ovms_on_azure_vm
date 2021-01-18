@@ -18,9 +18,12 @@ function deploy_vm () {
     echo "Processing $(($i + 1)) row.."
 
     PARAM_FOR_CUSTOM_SCRIPT=""
+    ALL_PORT_NUMBERS=""
     
     VM_NAME=$(echo $row | jq .vm_name | sed -e 's/^"//' -e 's/"$//')
     echo $VM_NAME
+    VM_SIZE=$(echo $row | jq .vm_size | sed -e 's/^"//' -e 's/"$//')
+    echo $VM_SIZE
 
     models=$(echo $row | jq .models)
     models_len=$(echo $models | jq length)
@@ -35,12 +38,18 @@ function deploy_vm () {
         echo $MODEL_PATH
 
         PARAM_FOR_CUSTOM_SCRIPT="${PARAM_FOR_CUSTOM_SCRIPT} ${PORT_NUMBER},${MODEL_NAME},${MODEL_PATH}"
+        
+        if [$j -eq 0]; then
+            ALL_PORT_NUMBERS="${PORT_NUMBER}"
+        else
+            ALL_PORT_NUMBERS="${ALL_PORT_NUMBERS},${PORT_NUMBER}"
+        fi
     done
 
     echo $PARAM_FOR_CUSTOM_SCRIPT
 
     DEPLOYMENT_NAME="Deployment_${i}"
-    az deployment group create --name $DEPLOYMENT_NAME --resource-group $RESOURCE_GROUP --template-file $ARM_TEMPLATE_FILE --parameters adminUsername=ai adminPasswordOrKey=Passw0rd1234 vmSize=Standard_D2s_v4 authenticationType=password customScriptCommandToExecute="sh CUSTOM_SCRIPT_setup_ovms.sh \"${AZURE_STORAGE_CONNECTION_STRING}\" ${PARAM_FOR_CUSTOM_SCRIPT}" vmName=$VM_NAME
+    az deployment group create --name $DEPLOYMENT_NAME --resource-group $RESOURCE_GROUP --template-file $ARM_TEMPLATE_FILE --parameters adminUsername=ai adminPasswordOrKey=Passw0rd1234 vmSize=$VM_SIZE portNumber=$ALL_PORT_NUMBERS authenticationType=password customScriptCommandToExecute="sh CUSTOM_SCRIPT_setup_ovms.sh \"${AZURE_STORAGE_CONNECTION_STRING}\" ${PARAM_FOR_CUSTOM_SCRIPT}" vmName=$VM_NAME
 }
 
 json=$(cat $1)

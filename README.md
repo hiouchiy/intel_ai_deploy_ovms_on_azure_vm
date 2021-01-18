@@ -1,6 +1,6 @@
 # How to deploy OpenVINO™ Model Server automatically onto Azure VM for OVaaS 
 
-This instruction shows how to launch Azure VM and deploy OpenVINO™ Model Server and specific model (IR format) together from Azure CLI. With this instructions and scripts, We can newly deploy and delete Azure VM and Model server at the timing whenever we want. 
+This instruction shows how to launch Azure VM and deploy OpenVINO™ Model Server and specific model (IR format) on that from Azure CLI. With this instructions and scripts, We can newly deploy and delete Azure VM and Model server at the timing whenever we want. 
 
 ## Setup enviroment
 ```Bash
@@ -22,6 +22,7 @@ You can deploy multiple model servers on single VM with configuration below. Thi
 [
     {
         "vm_name": "modelservervm",
+        "vm_size": "Standard_D2s_v4",
         "models":[
             {
                 "function_name": "humanpose",
@@ -57,6 +58,7 @@ You can deploy single model server on single VM with configuration below. In sho
 [
     {
         "vm_name": "humanpose_vm",
+        "vm_size": "Standard_D2s_v4",
         "models": [
             {
                 "function_name": "humanpose",
@@ -70,6 +72,7 @@ You can deploy single model server on single VM with configuration below. In sho
     },
     {
         "vm_name": "handwritten_vm",
+        "vm_size": "Standard_D2s_v4",
         "models": [
             {
                 "function_name": "handwritten",
@@ -83,6 +86,7 @@ You can deploy single model server on single VM with configuration below. In sho
     },
     {
         "vm_name": "colorization_vm",
+        "vm_size": "Standard_D2s_v4",
         "models": [
             {
                 "function_name": "colorization",
@@ -144,8 +148,10 @@ source ./deploy_vm.sh deploy_config.json ResourceGroupName ARM_TEMPLATE_PATH Azu
 ```
 
 ### Parameters
-1. Config file path
+1. The path of the configuration file
 1. Specific name of resource group to be created
+1. The path of ARM template file 
+1. Azure storage connection string (SAS is also be accepted)
 
 ## Delete Resource Group
 

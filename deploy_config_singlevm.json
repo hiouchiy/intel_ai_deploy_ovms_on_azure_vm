@@ -1,6 +1,7 @@
 [
     {
         "vm_name": "humanpose",
+        "vm_size": "Standard_D2s_v4",
         "models":[
             {
                 "function_name": "humanpose_vm",

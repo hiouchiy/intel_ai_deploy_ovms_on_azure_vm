@@ -62,6 +62,12 @@
       "metadata": {          
         "description": "CustomScript_commandToExecute"         
       }
+    },
+    "portNumber": {
+      "type": "string",
+      "metadata": {          
+        "description": "Port number to open for accessing model(s) from external"         
+      }
     }
   },
   "variables": {
@@ -123,12 +129,12 @@
             }
           },
           {                                                                                                                                                                                      
-            "name": "default-allow-9000",                                                                                                                                                          
+            "name": "Port-for-models",                                                                                                                                                          
             "properties": {                                                                                                                
               "priority": 1001,                                                                                                            
               "access": "Allow",                                                                                                                                                                 
               "direction": "Inbound",                                                                                                                                                            
-              "destinationPortRange": "9000-9002",                                                                                                
+              "destinationPortRange": "[parameters('portNumber')]",                                                                                                
               "protocol": "Tcp",                                                                                                                                                                 
               "sourceAddressPrefix": "*",                                                                                                  
               "sourcePortRange": "*",                                                                                                                                                            
