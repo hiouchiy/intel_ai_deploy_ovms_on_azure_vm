@@ -41,19 +41,21 @@ function deploy_vm () {
 
         PARAM_FOR_CUSTOM_SCRIPT="${PARAM_FOR_CUSTOM_SCRIPT} ${PORT_NUMBER},${MODEL_NAME},${MODEL_PATH}"
         
-        if [$j -eq 0]; then
+        if [ $j -eq 0 ]; then
             MIN_PORT_NUMBER=${PORT_NUMBER}
             MAX_PORT_NUMBER=${PORT_NUMBER}
         else
-            if [$PORT_NUMBER -lt $MIN_PORT_NUMBER]; then
+            if [ $PORT_NUMBER -lt $MIN_PORT_NUMBER ]; then
                 MIN_PORT_NUMBER=${PORT_NUMBER}
+            fi
             
-            if [$PORT_NUMBER -gt $MAX_PORT_NUMBER]; then
+            if [ $PORT_NUMBER -gt $MAX_PORT_NUMBER ]; then
                 MAX_PORT_NUMBER=${PORT_NUMBER}
+            fi
         fi
     done
     
-    if [$MIN_PORT_NUMBER -eq $MAX_PORT_NUMBER]; then
+    if [ $MIN_PORT_NUMBER -eq $MAX_PORT_NUMBER ]; then
         ALL_PORT_NUMBERS="${MAX_PORT_NUMBER}"
     else
         ALL_PORT_NUMBERS="${MIN_PORT_NUMBER}-${MAX_PORT_NUMBER}"
