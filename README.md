@@ -143,14 +143,18 @@ az login --service-principal \
 ```
 
 Finally, run the command below.
+- For multiple models on single VM
 ```Bash
-source ./deploy_vm.sh deploy_config.json ResourceGroupName ARM_TEMPLATE_PATH AzureStorageConnectionString
+source ./deploy_vm.sh deploy_config_singlevm.json ResourceGroupName  AzureStorageConnectionString
+```
+- For single model on single VM
+```Bash
+source ./deploy_vm.sh deploy_config.json ResourceGroupName  AzureStorageConnectionString
 ```
 
 ### Parameters
 1. The path of the configuration file
 1. Specific name of resource group to be created
-1. The path of ARM template file 
 1. Azure storage connection string (SAS is also be accepted)
 
 ## Delete Resource Group
