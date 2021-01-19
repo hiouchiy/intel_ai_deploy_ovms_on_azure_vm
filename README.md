@@ -30,7 +30,8 @@ You can deploy multiple model servers on single VM with configuration below. Thi
                 "env_name_ip": "HUMANPOSE_IPADDRESS",
                 "env_name_port": "HUMAN_POSE_PORT",
                 "port_number": 9000,
-                "model_path_on_azure_storage": "az://ovms/intel/human-pose-estimation-0001/FP16-INT8"
+                "model_path_on_azure_storage": "az://ovms/intel/human-pose-estimation-0001/FP16-INT8",
+                "model_server_version": "latest"
             },
             {
                 "function_name": "handwritten",
@@ -38,7 +39,8 @@ You can deploy multiple model servers on single VM with configuration below. Thi
                 "env_name_ip": "HANDWRITTEN_IPADDRESS",
                 "env_name_port": "HAND_WRITTEN_PORT",
                 "port_number": 9001,
-                "model_path_on_azure_storage": "az://ovms/intel/handwritten-japanese-recognition-0001/FP16-INT8"
+                "model_path_on_azure_storage": "az://ovms/intel/handwritten-japanese-recognition-0001/FP16-INT8",
+                "model_server_version": "latest"
             },
             {
                 "function_name": "colorization",
@@ -46,7 +48,8 @@ You can deploy multiple model servers on single VM with configuration below. Thi
                 "env_name_ip": "COLORIZATION_IPADDRESS",
                 "env_name_port": "COLORIZATION_PORT",
                 "port_number": 9002,
-                "model_path_on_azure_storage": "az://ovms/public/colorization-v2/FP32"
+                "model_path_on_azure_storage": "az://ovms/public/colorization-v2/FP32",
+                "model_server_version": "2021.1"
             }
         ]
     }
@@ -66,7 +69,8 @@ You can deploy single model server on single VM with configuration below. In sho
                 "env_name_ip": "HUMANPOSE_IPADDRESS",
                 "env_name_port": "HUMAN_POSE_PORT",
                 "port_number": 9000,
-                "model_path_on_azure_storage": "az://ovms/intel/human-pose-estimation-0001/FP16-INT8"
+                "model_path_on_azure_storage": "az://ovms/intel/human-pose-estimation-0001/FP16-INT8",
+                "model_server_version": "latest"
             }
         ]
     },
@@ -80,7 +84,8 @@ You can deploy single model server on single VM with configuration below. In sho
                 "env_name_ip": "HANDWRITTEN_IPADDRESS",
                 "env_name_port": "HAND_WRITTEN_PORT",
                 "port_number": 9000,
-                "model_path_on_azure_storage": "az://ovms/intel/handwritten-japanese-recognition-0001/FP16-INT8"
+                "model_path_on_azure_storage": "az://ovms/intel/handwritten-japanese-recognition-0001/FP16-INT8",
+                "model_server_version": "latest"
             }
         ]
     },
@@ -94,7 +99,8 @@ You can deploy single model server on single VM with configuration below. In sho
                 "env_name_ip": "COLORIZATION_IPADDRESS",
                 "env_name_port": "COLORIZATION_PORT",
                 "port_number": 9000,
-                "model_path_on_azure_storage": "az://ovms/public/colorization-v2/FP32"
+                "model_path_on_azure_storage": "az://ovms/public/colorization-v2/FP32",
+                "model_server_version": "2021.1"
             }
         ]
     }
