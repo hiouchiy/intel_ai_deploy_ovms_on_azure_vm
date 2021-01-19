@@ -38,8 +38,10 @@ function deploy_vm () {
         echo $PORT_NUMBER
         MODEL_PATH=$(echo $models | jq .[$j].model_path_on_azure_storage | sed -e 's/^"//' -e 's/"$//')
         echo $MODEL_PATH
+        MODEL_SERVER_VERSION=$(echo $models | jq .[$j].model_server_version | sed -e 's/^"//' -e 's/"$//')
+        echo $MODEL_SERVER_VERSION
 
-        PARAM_FOR_CUSTOM_SCRIPT="${PARAM_FOR_CUSTOM_SCRIPT} ${PORT_NUMBER},${MODEL_NAME},${MODEL_PATH}"
+        PARAM_FOR_CUSTOM_SCRIPT="${PARAM_FOR_CUSTOM_SCRIPT} ${PORT_NUMBER},${MODEL_NAME},${MODEL_PATH},${MODEL_SERVER_VERSION}"
         
         if [ $j -eq 0 ]; then
             MIN_PORT_NUMBER=${PORT_NUMBER}

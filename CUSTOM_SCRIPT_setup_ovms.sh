@@ -24,9 +24,10 @@ do
     PORT_NUMBER=`echo ${1} | cut -d , -f 1`
     MODEL_NAME=`echo ${1} | cut -d , -f 2`
     MODEL_PATH=`echo ${1} | cut -d , -f 3`
-    echo "$PORT_NUMBER $MODEL_NAME $MODEL_PATH"
+    MODEL_SERVER_VERSION=`echo ${1} | cut -d , -f 4`
+    echo "$PORT_NUMBER $MODEL_NAME $MODEL_PATH $MODEL_SERVER_VERSION"
     
-    sudo docker run --rm -d -v /home/ai/log:/log -p $PORT_NUMBER:9000 -e AZURE_STORAGE_CONNECTION_STRING=$AZURE_STORAGE_CONNECTION_STRING openvino/model_server:latest --model_path $MODEL_PATH --model_name $MODEL_NAME --port 9000 --log_level DEBUG --log_path "/log/${MODEL_NAME}.log"
+    sudo docker run --rm -d -v /home/ai/log:/log -p $PORT_NUMBER:9000 -e AZURE_STORAGE_CONNECTION_STRING=$AZURE_STORAGE_CONNECTION_STRING openvino/model_server:$MODEL_SERVER_VERSION --model_path $MODEL_PATH --model_name $MODEL_NAME --port 9000 --log_level DEBUG --log_path "/log/${MODEL_NAME}.log"
 
     shift
 done
