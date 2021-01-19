@@ -1,6 +1,9 @@
 # How to deploy OpenVINO™ Model Server automatically onto Azure VM for OVaaS 
 
-This instruction shows how to launch Azure VM and deploy OpenVINO™ Model Server and specific model (IR format) on that from Azure CLI. With this instructions and scripts, We can newly deploy and delete Azure VM and Model server at the timing whenever we want. 
+This instruction shows how to launch Azure VM and deploy OpenVINO™ Model Server and specific model (IR format) on that from Azure CLI. With this instructions and scripts, We can newly deploy and delete Azure VM and Model server at the timing whenever we want using scheduler such as 'cron'. 
+
+## Prerequisites
+- Docker installed
 
 ## Setup enviroment
 ```Bash
@@ -16,7 +19,7 @@ cd intel_ai_deploy_ovms_on_azure_vm
 ```
 
 ## Setup a configuration file (JSON format)
-### Multiple model servers on single VM
+### Multiple model servers on single VM (deploy_config_singlevm.json)
 You can deploy multiple model servers on single VM with configuration below. This configuraiton can save cost due to least number of VM but is basically better for test or develop use.
 ```JSON
 [
@@ -55,7 +58,7 @@ You can deploy multiple model servers on single VM with configuration below. Thi
     }
 ]
 ```
-### Single model server on single VM 
+### Single model server on single VM (deploy_config.json)
 You can deploy single model server on single VM with configuration below. In short, you need same number of vm as the number of models. This configuration is much more for production use than previous one.
 ```JSON
 [
