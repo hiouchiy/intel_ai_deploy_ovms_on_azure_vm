@@ -153,14 +153,25 @@ az login --service-principal \
 
 Finally, run the command below.
 - For multiple models on single VM
-```Bash
-source ./deploy_vm.sh deploy_config_singlevm.json ResourceGroupName  AzureStorageConnectionString
-```
-- For single model on single VM
-```Bash
-source ./deploy_vm.sh deploy_config.json ResourceGroupName  AzureStorageConnectionString
-```
+  ```Bash
+  source ./deploy_vm.sh deploy_config_singlevm.json ResourceGroupName  "AzureStorageConnectionString"
+  ```
+  (*) AzureStorageConnectionString should be enclosed in double-quote.
 
+  For example
+  ```Bash
+  source ./deploy_vm.sh deploy_config_singlevm.json OVaaS_VMRG  "DefaultEndpointsProtocol=https;AccountName=…"
+  ```
+- For single model on single VM
+  ```Bash
+  source ./deploy_vm.sh deploy_config.json ResourceGroupName  "AzureStorageConnectionString"
+  ```
+  (*) AzureStorageConnectionString should be enclosed in double-quote.
+
+  For example
+  ```Bash
+  source ./deploy_vm.sh deploy_config.json OVaaS_VMRG  "DefaultEndpointsProtocol=https;AccountName=…"
+  ```
 ### Parameters
 1. The path of the configuration file
 1. Specific name of resource group to be created
