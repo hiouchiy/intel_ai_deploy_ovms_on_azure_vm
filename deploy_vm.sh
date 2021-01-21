@@ -76,59 +76,49 @@ function deploy_vm () {
             --template-file $ARM_TEMPLATE_FILE \
             --parameters adminUsername=ai adminPasswordOrKey=Passw0rd1234 vmSize=$VM_SIZE portNumber=$ALL_PORT_NUMBERS authenticationType=password customScriptCommandToExecute="sh CUSTOM_SCRIPT_setup_ovms.sh \"${AZURE_STORAGE_CONNECTION_STRING}\" ${PARAM_FOR_CUSTOM_SCRIPT}" vmName=$VM_NAME
     else
-        # Create VNet
-        az network vnet create \
-          --resource-group $RESOURCE_GROUP \
-          --name ${VM_NAME}-VNet \
-          --address-prefixes 10.1.0.0/16 \
-          --subnet-name ${VM_NAME}-BackendSubnet \
-          --subnet-prefixes 10.1.0.0/16
-
-        # Create Public IP
-        az network public-ip create \
-          --resource-group $RESOURCE_GROUP \
-          --name ${VM_NAME}-PublicIP \
-          --sku Standard
-          
-        # Create Load Balancer
-        az network lb create \
-          --resource-group $RESOURCE_GROUP \
-          --name ${VM_NAME}-LoadBalancer \
-          --sku Standard \
-          --backend-pool-name ${VM_NAME}-BackEndPool \
-          --frontend-ip-name ${VM_NAME}-FrontEnd \
-          --public-ip-address ${VM_NAME}-PublicIP
-
         # Create VMSS
         az vmss create \
           --resource-group $RESOURCE_GROUP \
-          --name ${VM_NAME}-ScaleSetF1Sku \
+          --name ${VM_NAME}ScaleSet \
           --image UbuntuLTS \
           --vm-sku $VM_SIZE \
           --admin-user ai \
           --admin-password Passw0rd1234 \
           --upgrade-policy-mode Automatic \
           --authentication-type password \
-          --load-balancer ${VM_NAME}-LoadBalancer \
-          --vnet-name ${VM_NAME}-VNet \
-          --subnet ${VM_NAME}-BackendSubnet \
           --scale-in-policy OldestVM
 
         # Install Custom Script
         az vmss extension set \
-          --vmss-name ${VM_NAME}-ScaleSetF1Sku \
+          --vmss-name ${VM_NAME}ScaleSet \
           --publisher Microsoft.Azure.Extensions \
           --version 2.0 \
           --name CustomScript \
           --resource-group $RESOURCE_GROUP \
           --settings '{"fileUris": ["https://raw.githubusercontent.com/hiouchiy/intel_ai_deploy_ovms_on_azure_vm/main/CUSTOM_SCRIPT_setup_ovms.sh"],"commandToExecute": "sh /var/lib/waagent/custom-script/download/1/CUSTOM_SCRIPT_setup_ovms.sh \"${AZURE_STORAGE_CONNECTION_STRING}\" ${PARAM_FOR_CUSTOM_SCRIPT}"}'
 
+        for j in $( seq 0 $(($models_len - 1)) ); do
+            PORT_NUMBER=$(echo $models | jq .[$j].port_number)
+            echo $PORT_NUMBER
+            
+            # Setup Port number in LB
+            az network lb rule create \
+              --resource-group $RESOURCE_GROUP \
+              --name ${VM_NAME}ScaleSetLBRule${PORT_NUMBER} \
+              --lb-name ${VM_NAME}ScaleSetLB \
+              --backend-pool-name ${VM_NAME}ScaleSetBEPool \
+              --backend-port $PORT_NUMBER \
+              --frontend-ip-name loadBalancerFrontEnd \
+              --frontend-port $PORT_NUMBER \
+              --protocol tcp
+        done
+  
         # Create Auto Scale setting （The num of VM instance is MIN:2 and MAX:10）
         az monitor autoscale create \
           --resource-group $RESOURCE_GROUP \
-          --resource ${VM_NAME}-ScaleSetF1Sku \
+          --resource ${VM_NAME}ScaleSet \
           --resource-type Microsoft.Compute/virtualMachineScaleSets \
-          --name ${VM_NAME}-autoscale \
+          --name ${VM_NAME}AutoScale \
           --min-count 2 \
           --max-count 10 \
           --count 2
@@ -136,14 +126,14 @@ function deploy_vm () {
         # Create Auto Scale rule （過去５分の平均CPU使用率が70％以上の場合、インスタンスを3つ作成）
         az monitor autoscale rule create \
           --resource-group $RESOURCE_GROUP \
-          --autoscale-name ${VM_NAME}-autoscale \
+          --autoscale-name ${VM_NAME}AutoScale \
           --condition "Percentage CPU > 70 avg 5m" \
           --scale out 3
 
         # Create Auto Scale rule （過去５分の平均CPU使用率が30％未満に場合、インスタンスを1つ削除）
         az monitor autoscale rule create \
           --resource-group $RESOURCE_GROUP \
-          --autoscale-name ${VM_NAME}-autoscale \
+          --autoscale-name ${VM_NAME}AutoScale \
           --condition "Percentage CPU < 30 avg 5m" \
           --scale in 1
     fi
@@ -184,7 +174,7 @@ for i in $( seq 0 $(($len - 1)) ); do
     if [ $DEPLOY_TYPE = "vm" ]; then
         IP_ADDRESS=`az vm list-ip-addresses -g $RESOURCE_GROUP -n $VM_NAME -o json | jq -r .[].virtualMachine.network.publicIpAddresses[0].ipAddress`
     else
-        IP_ADDRESS=`az network lb frontend-ip list --lb-name ${VM_NAME}-LoadBalancer --resource-group $RESOURCE_GROUP -o json | jq -r .[].virtualMachine.network.publicIpAddresses[0].ipAddress`
+        IP_ADDRESS=`az network public-ip show --resource-group $RESOURCE_GROUP --name ${VM_NAME}ScaleSetLBPublicIP --query '[ipAddress]' --output tsv`
     fi
 
     models=$(echo $row | jq .models)
