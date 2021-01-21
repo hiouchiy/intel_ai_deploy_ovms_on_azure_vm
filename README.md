@@ -26,6 +26,7 @@ You can deploy multiple model servers on single VM with configuration below. Thi
     {
         "vm_name": "modelservervm",
         "vm_size": "Standard_D2s_v4",
+        "deploy_type": "vmss",
         "models":[
             {
                 "function_name": "humanpose",
@@ -65,6 +66,7 @@ You can deploy single model server on single VM with configuration below. In sho
     {
         "vm_name": "humanpose_vm",
         "vm_size": "Standard_D2s_v4",
+        "deploy_type": "vmss",
         "models": [
             {
                 "function_name": "humanpose",
@@ -80,6 +82,7 @@ You can deploy single model server on single VM with configuration below. In sho
     {
         "vm_name": "handwritten_vm",
         "vm_size": "Standard_D2s_v4",
+        "deploy_type": "vmss",
         "models": [
             {
                 "function_name": "handwritten",
@@ -95,6 +98,7 @@ You can deploy single model server on single VM with configuration below. In sho
     {
         "vm_name": "colorization_vm",
         "vm_size": "Standard_D2s_v4",
+        "deploy_type": "vmss",
         "models": [
             {
                 "function_name": "colorization",
@@ -112,6 +116,8 @@ You can deploy single model server on single VM with configuration below. In sho
 ```
 ### Parameter Definitions
 1. **vm_name**: a name of Azure VM
+1. **vm_size**: a size of Azure VM
+1. **deploy_type**: vm (single vm) / vmss (VM ScaleSet)
 1. **models**: a list consisting of model(s) to be deoloyed on the VM named "vm_name"
     1. **function_name**: the name of the corresponding fucntion on Azure functions
     1. **model_name**: a unique name of deployed model on model server
