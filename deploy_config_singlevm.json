@@ -2,6 +2,7 @@
     {
         "vm_name": "single-vm",
         "vm_size": "Standard_D2s_v4",
+        "deploy_type": "vmss",
         "models":[
             {
                 "function_name": "humanpose",
