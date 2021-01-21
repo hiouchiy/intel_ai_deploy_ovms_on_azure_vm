@@ -95,7 +95,7 @@ function deploy_vm () {
           --version 2.0 \
           --name CustomScript \
           --resource-group $RESOURCE_GROUP \
-          --settings '{"fileUris": ["https://raw.githubusercontent.com/hiouchiy/intel_ai_deploy_ovms_on_azure_vm/main/CUSTOM_SCRIPT_setup_ovms.sh"],"commandToExecute": "sh /var/lib/waagent/custom-script/download/1/CUSTOM_SCRIPT_setup_ovms.sh \"${AZURE_STORAGE_CONNECTION_STRING}\" ${PARAM_FOR_CUSTOM_SCRIPT}"}'
+          --settings '{"fileUris": ["https://raw.githubusercontent.com/hiouchiy/intel_ai_deploy_ovms_on_azure_vm/main/CUSTOM_SCRIPT_setup_ovms.sh"],"commandToExecute": "sudo sh /var/lib/waagent/custom-script/download/1/CUSTOM_SCRIPT_setup_ovms.sh \"${AZURE_STORAGE_CONNECTION_STRING}\" ${PARAM_FOR_CUSTOM_SCRIPT}"}'
 
         for j in $( seq 0 $(($models_len - 1)) ); do
             PORT_NUMBER=$(echo $models | jq .[$j].port_number)
@@ -106,7 +106,7 @@ function deploy_vm () {
               --resource-group $RESOURCE_GROUP \
               --name ${VM_NAME}ScaleSetLBRule${PORT_NUMBER} \
               --lb-name ${VM_NAME}ScaleSetLB \
-              --backend-pool-name ${VM_NAME}ScaleSetBEPool \
+              --backend-pool-name ${VM_NAME}ScaleSetLBBEPool \
               --backend-port $PORT_NUMBER \
               --frontend-ip-name loadBalancerFrontEnd \
               --frontend-port $PORT_NUMBER \
