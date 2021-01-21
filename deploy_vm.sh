@@ -89,13 +89,15 @@ function deploy_vm () {
           --scale-in-policy OldestVM
 
         # Install Custom Script
+        COMMAND=$(echo '{"fileUris":["https://raw.githubusercontent.com/hiouchiy/intel_ai_deploy_ovms_on_azure_vm/main/CUSTOM_SCRIPT_setup_ovms.sh"],"commandToExecute":"./CUSTOM_SCRIPT_setup_ovms.sh \"'${AZURE_STORAGE_CONNECTION_STRING}'\" '${PARAM_FOR_CUSTOM_SCRIPT}'"}')
+        echo $COMMAND
         az vmss extension set \
           --vmss-name ${VM_NAME}ScaleSet \
           --publisher Microsoft.Azure.Extensions \
           --version 2.0 \
           --name CustomScript \
           --resource-group $RESOURCE_GROUP \
-          --settings '{"fileUris": ["https://raw.githubusercontent.com/hiouchiy/intel_ai_deploy_ovms_on_azure_vm/main/CUSTOM_SCRIPT_setup_ovms.sh"],"commandToExecute": "sudo sh /var/lib/waagent/custom-script/download/1/CUSTOM_SCRIPT_setup_ovms.sh \"${AZURE_STORAGE_CONNECTION_STRING}\" ${PARAM_FOR_CUSTOM_SCRIPT}"}'
+          --settings "$COMMAND"
 
         for j in $( seq 0 $(($models_len - 1)) ); do
             PORT_NUMBER=$(echo $models | jq .[$j].port_number)
