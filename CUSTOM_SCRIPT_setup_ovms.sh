@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 AZURE_STORAGE_CONNECTION_STRING=$1
 
