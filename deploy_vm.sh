@@ -142,24 +142,25 @@ function deploy_vm () {
 json=$(cat $1)
 len=$(echo $json | jq length)
 for i in $( seq 0 $(($len - 1)) ); do
-    deploy_vm $i &
-    pid_list[${i}]=$!
+    deploy_vm $i > /dev/null 2>&1 &
+#    pid_list[${i}]=$!
     sleep 5
 done
 
-for pid in ${pid_list[@]}; do
-    wait $pid
-    sc=$?
-    if [ 0 -ne $sc ]; then
-        echo "[error] pid=$pid finished with status code $sc"
-#        for pid2 in ${pid_list[@]}; do
-#            kill -KILL $pid2
-#        done
-#        exit 1
-    else
-        echo "[info] pid=$pid finished"
-    fi
-done
+#for pid in ${pid_list[@]}; do
+#    wait $pid
+#    sc=$?
+#    if [ 0 -ne $sc ]; then
+#        echo "[error] pid=$pid finished with status code $sc"
+##        for pid2 in ${pid_list[@]}; do
+##            kill -KILL $pid2
+##        done
+##        exit 1
+#    else
+#        echo "[info] pid=$pid finished"
+#    fi
+#done
+wait
 
 echo "[info] -----------------------------"
 echo "[info] finished all background proc."
