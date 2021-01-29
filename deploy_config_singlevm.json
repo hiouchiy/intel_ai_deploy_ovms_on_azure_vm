@@ -8,7 +8,7 @@
                 "function_name": "humanpose",
                 "model_name": "human-pose-estimation",
                 "env_name_ip": "HUMANPOSE_IPADDRESS",
-                "env_name_port": "HUMAN_POSE_PORT",
+                "env_name_port": "HUMANPOSE_PORT",
                 "port_number": 9000,
                 "model_path_on_azure_storage": "az://ovms/intel/human-pose-estimation-0001/FP16-INT8",
                 "model_server_version": "latest"
@@ -17,7 +17,7 @@
                 "function_name": "handwritten",
                 "model_name": "handwritten-japanese-recognition",
                 "env_name_ip": "HANDWRITTEN_IPADDRESS",
-                "env_name_port": "HAND_WRITTEN_PORT",
+                "env_name_port": "HANDWRITTEN_PORT",
                 "port_number": 9001,
                 "model_path_on_azure_storage": "az://ovms/intel/handwritten-japanese-recognition-0001/FP16-INT8",
                 "model_server_version": "latest"
