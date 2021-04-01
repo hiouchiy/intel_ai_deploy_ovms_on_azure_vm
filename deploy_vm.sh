@@ -193,3 +193,5 @@ for i in $( seq 0 $(($len - 1)) ); do
         az functionapp config appsettings set --name $AF_NAME  --resource-group $AF_RESOURCE_GROUP --settings "$AF_IP_ADDRESS_NAME=$IP_ADDRESS" "$AF_PORT_NAME=$PORT_NUMBER"
     done
 done
+
+echo "[info] SUCCESSFULLY_DONE"
