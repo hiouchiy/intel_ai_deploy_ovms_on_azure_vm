@@ -30,6 +30,15 @@
                 "port_number": 9002,
                 "model_path_on_azure_storage": "az://ovms/public/colorization-v2-old/FP32",
                 "model_server_version": "2021.1"
+            },
+            {
+                "function_name": "objectdetection",
+                "model_name": "object-detection",
+                "env_name_ip": "OBJECTDETECTION_IPADDRESS",
+                "env_name_port": "OBJECTDETECTION_PORT",
+                "port_number": 9003,
+                "model_path_on_azure_storage": "az://ovms/objectdetection",
+                "model_server_version": "2021.3"
             }
         ]
     }

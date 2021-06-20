@@ -46,5 +46,21 @@
                 "model_server_version": "2021.1"
             }
         ]
+    },
+    {
+        "vm_name": "objectdetection-vm",
+        "vm_size": "Standard_D2s_v4",
+        "deploy_type": "vmss",
+        "models": [
+            {
+                "function_name": "objectdetection",
+                "model_name": "object-detection",
+                "env_name_ip": "OBJECTDETECTION_IPADDRESS",
+                "env_name_port": "OBJECTDETECTION_PORT",
+                "port_number": 9000,
+                "model_path_on_azure_storage": "az://ovms/objectdetection",
+                "model_server_version": "2021.3"
+            }
+        ]
     }
 ]
