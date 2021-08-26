@@ -43,10 +43,19 @@
             {
                 "function_name": "faceage",
                 "model_name": "face-detection",
-                "env_name_ip": "FACEAGE_IPADDRESS",
-                "env_name_port": "FACEAGE_PORT",
+                "env_name_ip": "FACEDETECTION_IPADDRESS",
+                "env_name_port": "FACEDETECTION_PORT",
                 "port_number": 9004,
                 "model_path_on_azure_storage": "az://ovms/intel/face-detection-retail-0005/FP16-INT8",
+                "model_server_version": "2021.4"
+            },
+            {
+                "function_name": "faceage",
+                "model_name": "age-gender-recognition",
+                "env_name_ip": "EMOTIONRECOGNIZATION_IPADDRESS",
+                "env_name_port": "EMOTIONRECOGNIZATION_PORT",
+                "port_number": 9005,
+                "model_path_on_azure_storage": "az://ovms/intel/emotions-recognition-retail-0003/FP16-INT8",
                 "model_server_version": "2021.4"
             },
             {
@@ -54,7 +63,7 @@
                 "model_name": "semantic-segmentation-adas",
                 "env_name_ip": "HUMANSEGMENTATION_IPADDRESS",
                 "env_name_port": "HUMANSEGMENTATION_PORT",
-                "port_number": 9005,
+                "port_number": 9006,
                 "model_path_on_azure_storage": "az://ovms/intel/semantic-segmentation-adas-0001/FP16-INT8",
                 "model_server_version": "2021.4"
             },
@@ -63,7 +72,7 @@
                 "model_name": "midasnet",
                 "env_name_ip": "MONODEPTH_IPADDRESS",
                 "env_name_port": "MONODEPTH_PORT",
-                "port_number": 9006,
+                "port_number": 9007,
                 "model_path_on_azure_storage": "az://ovms/public/midasnet/FP32",
                 "model_server_version": "2021.4"
             },
@@ -72,7 +81,7 @@
                 "model_name": "super-resolution",
                 "env_name_ip": "SUPERRESOLUTION_IPADDRESS",
                 "env_name_port": "SUPERRESOLUTION_PORT",
-                "port_number": 9007,
+                "port_number": 9008,
                 "model_path_on_azure_storage": "az://ovms/intel/single-image-super-resolution-1032/FP16-INT8",
                 "model_server_version": "2021.4"
             }
