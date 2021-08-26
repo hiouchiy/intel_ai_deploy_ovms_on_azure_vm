@@ -82,7 +82,7 @@
                 "env_name_ip": "SUPERRESOLUTION_IPADDRESS",
                 "env_name_port": "SUPERRESOLUTION_PORT",
                 "port_number": 9008,
-                "model_path_on_azure_storage": "az://ovms/intel/single-image-super-resolution-1032/FP16-INT8",
+                "model_path_on_azure_storage": "az://ovms/intel/single-image-super-resolution-1033/FP16-INT8",
                 "model_server_version": "2021.4"
             }
         ]
