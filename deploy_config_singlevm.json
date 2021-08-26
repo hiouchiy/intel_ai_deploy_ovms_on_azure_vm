@@ -52,10 +52,10 @@
             {
                 "function_name": "faceage",
                 "model_name": "age-gender-recognition",
-                "env_name_ip": "EMOTIONRECOGNIZATION_IPADDRESS",
-                "env_name_port": "EMOTIONRECOGNIZATION_PORT",
+                "env_name_ip": "AGEGENDER_IPADDRESS",
+                "env_name_port": "AGEGENDER_PORT",
                 "port_number": 9005,
-                "model_path_on_azure_storage": "az://ovms/intel/emotions-recognition-retail-0003/FP16-INT8",
+                "model_path_on_azure_storage": "az://ovms/intel/age-gender-recognition-retail-0013/FP16-INT8",
                 "model_server_version": "2021.4"
             },
             {
