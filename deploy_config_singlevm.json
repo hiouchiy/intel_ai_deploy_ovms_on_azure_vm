@@ -84,6 +84,15 @@
                 "port_number": 9008,
                 "model_path_on_azure_storage": "az://ovms/intel/single-image-super-resolution-1033/FP16-INT8",
                 "model_server_version": "2021.4"
+            },
+            {
+                "function_name": "yolov3",
+                "model_name": "yolo-v3",
+                "env_name_ip": "YOLOV3_IPADDRESS",
+                "env_name_port": "YOLOV3_PORT",
+                "port_number": 9009,
+                "model_path_on_azure_storage": "az://ovms/public/yolo-v3-tf",
+                "model_server_version": "2021.4"
             }
         ]
     }
